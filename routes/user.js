@@ -66,9 +66,9 @@ router.post('/upload', function(req, res) {
 	upload(req, res, function(err) {
 		if(err) {
 			console.log(err);
+			res.status(400);
 			res.end();
 		}else{
-			console.log(req.file);
 			var sql = "INSERT INTO images (user_id, image_name, date) VALUES ("+req.body.id+", '"+req.file.filename+"',"+req.date+")";
 			con.query(sql, function (err, result) {
 				if (err) {
@@ -79,7 +79,7 @@ router.post('/upload', function(req, res) {
 					res.status(200);
 				}
 			});
-			res.end();
+			res.send({id: req.body.id});
 		}
 	})
 });
